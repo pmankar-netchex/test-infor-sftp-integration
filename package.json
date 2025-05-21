@@ -1,0 +1,40 @@
+{
+  "name": "azure-sftp-integration",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "NODE_ENV=development nodemon index.js",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "lint": "eslint ."
+  },
+  "keywords": [
+    "azure",
+    "sftp",
+    "integration"
+  ],
+  "author": "",
+  "license": "ISC",
+  "description": "Node.js application for generating and pushing employee data to Azure SFTP",
+  "dependencies": {
+    "@azure/identity": "^4.10.0",
+    "@azure/keyvault-secrets": "^4.9.0",
+    "@azure/storage-file-share": "^12.27.0",
+    "applicationinsights": "^2.9.7",
+    "axios": "^1.9.0",
+    "config": "^4.0.0",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "mssql": "^11.0.1",
+    "node-schedule": "^2.1.1",
+    "winston": "^3.17.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.57.0",
+    "jest": "^29.7.0",
+    "nodemon": "^3.1.10",
+    "supertest": "^6.3.4"
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "app": {
+    "name": "azure-sftp-integration"
+  },
+  "database": {
+    "server": "${SQL_SERVER}",
+    "database": "${SQL_DATABASE}", 
+    "options": {
+      "encrypt": true,
+      "enableArithAbort": true,
+      "trustServerCertificate": true
+    },
+    "pool": {
+      "max": 10,
+      "min": 0,
+      "idleTimeoutMillis": 30000
+    }
+  },
+  "azure": {
+    "keyVault": {
+      "name": "${KEY_VAULT_NAME}"
+    },
+    "storage": {
+      "accountName": "${STORAGE_ACCOUNT_NAME}",
+      "fileShareName": "${FILE_SHARE_NAME}"
+    }
+  },
+  "schedule": {
+    "interval": "${SCHEDULE_INTERVAL}"
+  },
+  "concurrency": {
+    "maxThreads": 5
+  },
+  "logging": {
+    "level": "info",
+    "file": "logs/app.log"
+  }
+}
