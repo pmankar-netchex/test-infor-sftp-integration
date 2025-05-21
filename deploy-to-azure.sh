@@ -107,6 +107,38 @@ az webapp deployment source config-zip \
     --name $APP_SERVICE_NAME \
     --src ./deployment/app.zip
 
+# Set environment variables from .env.example to App Service Configuration
+echo "Setting environment variables in App Service Configuration..."
+if [ -f .env.example ]; then
+    # Read from .env.example and set each variable in App Service
+    while IFS= read -r line || [[ -n "$line" ]]; do
+        # Skip comments and empty lines
+        if [[ $line =~ ^[^#].+=.+ ]]; then
+            # Extract key and value
+            key=$(echo "$line" | cut -d '=' -f 1)
+            value=$(echo "$line" | cut -d '=' -f 2-)
+            
+            # Skip if the value contains "your-" placeholder
+            if [[ ! $value =~ "your-" ]]; then
+                echo "Setting $key in App Service Configuration..."
+                az webapp config appsettings set \
+                    --resource-group $RESOURCE_GROUP_NAME \
+                    --name $APP_SERVICE_NAME \
+                    --settings "$key=$value" \
+                    --output none
+            fi
+        fi
+    done < .env.example
+fi
+
+# Add script to create .env file from environment variables on App Service startup
+echo "Configuring App Service to create .env file on startup..."
+az webapp config set \
+    --resource-group $RESOURCE_GROUP_NAME \
+    --name $APP_SERVICE_NAME \
+    --post-deployment-script-path="./scripts/setup-env.js" \
+    --output none
+
 echo "Application deployment completed successfully!"
 echo "You can access your application at: $APP_SERVICE_URL"
 echo ""
